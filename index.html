@@ -21,10 +21,9 @@
 			;
 
 		function setup (){
-			var random_id = "0000" + Math.floor(Math.random() * 10000);
 
             /* Connection declarations */
-			app_name = app_name + ' ' + random_id.substring(random_id.length-4);
+			app_name = app_name
 
 			sb = new Spacebrew.Client({reconnect:true});
 
