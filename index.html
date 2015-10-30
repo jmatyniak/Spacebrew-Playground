@@ -33,40 +33,21 @@
             /* Dynamically creates publishers */
 			$('.button').each(function() {
                 var target = $(this).attr('id');
-                sb.addPublish( target, "boolean", "false" );
+                sb.addPublish( target, "string", "" );
 			});
-
-			sb.addSubscribe( "toggleBackground", "boolean" );
-
-			sb.onBooleanMessage = onBooleanMessage;
 
 			sb.connect();
 
             /* Listeners */
 			$(".button").on("mousedown", function(e){
     			var target = $(this).attr('id');
-    			sb.send(target, "boolean", "true");
+    			sb.send(target, "string", target);
 			});
 
 			$(".button").on("mouseup", function(e){
                 var target = $(this).attr('id');
-    			sb.send("buttonPressA", "boolean", "false");
+    			sb.send(target, "string", "");
 			});
-		}
-
-        /* Reciever Call */
-		function onBooleanMessage( name, value ){
-			console.log("[onBooleanMessage] boolean message received ", value);
-
-			if (name == "routeA"){
-
-			}
-
-			if (value) {
-		        document.body.style.background = "rgb(100,255,100)";
-			} else {
-		        document.body.style.background = "rgb(220,220,220)";
-			}
 		}
 
 	</script>
