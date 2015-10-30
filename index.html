@@ -12,7 +12,7 @@
     <script type="text/javascript">
 
 		$(window).on("load", setup);
-	      
+
 		// Spacebrew Object
 		var sb
 			, app_name = "button example"
@@ -35,7 +35,9 @@
 			sb.description("This spacebrew client sends and receives boolean messages.");
 
 			// configure the publication and subscription feeds
-			sb.addPublish( "buttonPress", "boolean", "false" );
+			sb.addPublish( "buttonPressA", "boolean", "false" );
+			sb.addPublish( "buttonPressB", "boolean", "false" );
+			sb.addPublish( "buttonPressC", "boolean", "false" );
 			sb.addSubscribe( "toggleBackground", "boolean" );
 
 			// override Spacebrew events - this is how you catch events coming from Spacebrew
@@ -45,10 +47,31 @@
 			// connect to spacbrew
 			sb.connect();
 
-			// listen to the mouse 
-			$("#buttonMsg").on("mousedown", onButtonPress);
-			$("#buttonMsg").on("mouseup", onButtonRelease);
-		}	
+			// listen to the mouse
+			$("#buttonMsgA").on("touchdown", function(e){
+    			sb.send("buttonPressA", "boolean", "true");
+			});
+
+			$("#buttonMsgA").on("touchup", function(e){
+    			sb.send("buttonPressA", "boolean", "false");
+			});
+
+			$("#buttonMsgB").on("touchdown", function(e){
+    			sb.send("buttonPressB", "boolean", "true");
+			});
+
+			$("#buttonMsgB").on("touchup", function(e){
+    			sb.send("buttonPressA", "boolean", "false");
+			});
+
+			$("#buttonMsgC").on("touchdown", function(e){
+    			sb.send("buttonPressC", "boolean", "true");
+			});
+
+			$("#buttonMsgC").on("touchup", function(e){
+    			sb.send("buttonPressA", "boolean", "false");
+			});
+		}
 
 		/**
 		 * Function that is called when Spacebrew connection is established
@@ -62,24 +85,6 @@
 		}
 
 		/**
-	     * Function that is called whenever the button is pressed.  
-	     * @param  {Event object} evt Holds information about the button press event
-	     */
-		function onButtonPress (evt){
-		      	console.log("[onButtonPress] button has been pressed"); 
-	        sb.send("buttonPress", "boolean", "true");
-		}
-
-		/**
-	     * Function that is called whenever the button is released.  
-	     * @param  {Event object} evt Holds information about the button press event
-	     */
-		function onButtonRelease (evt){
-	      	console.log("[onButtonRelease] button has been released"); 
-	        sb.send("buttonPress", "boolean", "false");
-		}
-
-		/**
 		 * onBooleanMessage Function that is called whenever new spacebrew boolean messages are received.
 		 *          It accepts two parameters:
 		 * @param  {String} name    Holds name of the subscription feed channel
@@ -88,9 +93,9 @@
 		function onBooleanMessage( name, value ){
 			console.log("[onBooleanMessage] boolean message received ", value);
 			if (value) {
-		        document.body.style.background = "rgb(100,255,100)"; 
+		        document.body.style.background = "rgb(100,255,100)";
 			} else {
-		        document.body.style.background = "rgb(220,220,220)"; 				
+		        document.body.style.background = "rgb(220,220,220)";
 			}
 		}
 
@@ -100,7 +105,9 @@
 	<body>
 		<h1>Click to send a message to spacebrew</h1>
 		<h3 id="numclicks"></h3>
-		<a class="button" id="buttonMsg">Click Me</a>
+		<a class="button" id="buttonMsgA">Red</a>
+		<a class="button" id="buttonMsgB">Green</a>
+		<a class="button" id="buttonMsgC">Blue</a>
 
 		</br></br>
 		<div id="name">Trying to connect</div>
