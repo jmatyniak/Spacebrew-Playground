@@ -48,27 +48,27 @@
 			sb.connect();
 
 			// listen to the mouse
-			$("#buttonMsgA").on("touchdown", function(e){
+			$("#buttonMsgA").on("mousedown", function(e){
     			sb.send("buttonPressA", "boolean", "true");
 			});
 
-			$("#buttonMsgA").on("touchup", function(e){
+			$("#buttonMsgA").on("mouseup", function(e){
     			sb.send("buttonPressA", "boolean", "false");
 			});
 
-			$("#buttonMsgB").on("touchdown", function(e){
+			$("#buttonMsgB").on("mousedown", function(e){
     			sb.send("buttonPressB", "boolean", "true");
 			});
 
-			$("#buttonMsgB").on("touchup", function(e){
+			$("#buttonMsgB").on("mouseup", function(e){
     			sb.send("buttonPressA", "boolean", "false");
 			});
 
-			$("#buttonMsgC").on("touchdown", function(e){
+			$("#buttonMsgC").on("mousedown", function(e){
     			sb.send("buttonPressC", "boolean", "true");
 			});
 
-			$("#buttonMsgC").on("touchup", function(e){
+			$("#buttonMsgC").on("mouseup", function(e){
     			sb.send("buttonPressA", "boolean", "false");
 			});
 		}
