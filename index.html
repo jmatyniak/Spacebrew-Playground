@@ -13,85 +13,54 @@
 
 		$(window).on("load", setup);
 
-		// Spacebrew Object
 		var sb
-			, app_name = "button example"
+			, app_name = "Playground of DOOM"
 			;
 
-		/**
-	     * setup Configure spacebrew connection and adds the mousedown listener.
-	     */
 		function setup (){
-			var random_id = "0000" + Math.floor(Math.random() * 10000)
-				;
+			var random_id = "0000" + Math.floor(Math.random() * 10000);
 
+            /* Connection declarations */
 			app_name = app_name + ' ' + random_id.substring(random_id.length-4);
 
-			// create spacebrew client object
 			sb = new Spacebrew.Client({reconnect:true});
 
-			// set the base description
 			sb.name(app_name);
-			sb.description("This spacebrew client sends and receives boolean messages.");
+			sb.description("This triggers traps and such in our playground.");
 
-			// configure the publication and subscription feeds
-			sb.addPublish( "buttonPressA", "boolean", "false" );
-			sb.addPublish( "buttonPressB", "boolean", "false" );
-			sb.addPublish( "buttonPressC", "boolean", "false" );
+            /* Dynamically creates publishers */
+			$('.button').each(function() {
+                var target = $(this).attr('id');
+                sb.addPublish( target, "boolean", "false" );
+			});
+
 			sb.addSubscribe( "toggleBackground", "boolean" );
 
-			// override Spacebrew events - this is how you catch events coming from Spacebrew
 			sb.onBooleanMessage = onBooleanMessage;
 			sb.onOpen = onOpen;
 
-			// connect to spacbrew
 			sb.connect();
 
-			// listen to the mouse
-			$("#buttonMsgA").on("mousedown", function(e){
-    			sb.send("buttonPressA", "boolean", "true");
+            /* Listeners */
+			$(".button").on("mousedown", function(e){
+    			var target = $(this).attr('id');
+    			sb.send(target, "boolean", "true");
 			});
 
-			$("#buttonMsgA").on("mouseup", function(e){
-    			sb.send("buttonPressA", "boolean", "false");
-			});
-
-			$("#buttonMsgB").on("mousedown", function(e){
-    			sb.send("buttonPressB", "boolean", "true");
-			});
-
-			$("#buttonMsgB").on("mouseup", function(e){
-    			sb.send("buttonPressA", "boolean", "false");
-			});
-
-			$("#buttonMsgC").on("mousedown", function(e){
-    			sb.send("buttonPressC", "boolean", "true");
-			});
-
-			$("#buttonMsgC").on("mouseup", function(e){
+			$(".button").on("mouseup", function(e){
+                var target = $(this).attr('id');
     			sb.send("buttonPressA", "boolean", "false");
 			});
 		}
 
-		/**
-		 * Function that is called when Spacebrew connection is established
-		 */
-		function onOpen() {
-			var message = "Connected as <strong>" + sb.name() + "</strong>. ";
-			if (sb.name() === app_name) {
-				message += "<br>You can customize this app's name in the query string by adding <strong>name=your_app_name</strong>."
-			}
-			$("#name").html( message );
-		}
-
-		/**
-		 * onBooleanMessage Function that is called whenever new spacebrew boolean messages are received.
-		 *          It accepts two parameters:
-		 * @param  {String} name    Holds name of the subscription feed channel
-		 * @param  {Boolean} value  Holds value received from the subscription feed
-		 */
+        /* Reciever Call */
 		function onBooleanMessage( name, value ){
 			console.log("[onBooleanMessage] boolean message received ", value);
+
+			if (name == "routeA"){
+
+			}
+
 			if (value) {
 		        document.body.style.background = "rgb(100,255,100)";
 			} else {
@@ -103,14 +72,10 @@
 	</head>
 
 	<body>
-		<h1>Click to send a message to spacebrew</h1>
-		<h3 id="numclicks"></h3>
-		<a class="button" id="buttonMsgA">Red</a>
-		<a class="button" id="buttonMsgB">Green</a>
-		<a class="button" id="buttonMsgC">Blue</a>
-
-		</br></br>
-		<div id="name">Trying to connect</div>
+		<a class="button" id="sectionA1">1</a><br />
+		<a class="button" id="sectionA2">2</a><br />
+		<a class="button" id="sectionA3">3</a><br />
+		<a class="button" id="sectionA4">4</a>
 	</body>
 
 </html>
