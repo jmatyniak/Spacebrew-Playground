@@ -1,0 +1,71 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<video id="videoA" width="320" height="240" loop="loop">
+</video>
+
+<video id="videoB" width="320" height="240" loop="loop">
+</video>
+
+<script>
+$( document ).ready(function() {
+    var scheme = 1
+    $( "body" ).keyup(function(e) {
+        if ( e.which == 32 ) {
+            if(scheme == 4) {
+                scheme = 1;
+            }
+            else {
+                scheme++;
+            }
+            var vidA = document.getElementById("videoA");
+            if (!vidA.paused) {
+                document.getElementById('videoA').pause();
+                currSrc = $('#videoA source').attr('src');
+                newSrc = currSrc.substring(1);
+                newSrc = scheme + newSrc;
+                $('#videoA source').attr('src', newSrc);
+                document.getElementById('videoA').load();
+                document.getElementById('videoA').play();
+            }
+            var vidB = document.getElementById("videoB");
+            if (!vidB.paused) {
+                document.getElementById('videoB').pause();
+                currSrc = $('#videoB source').attr('src');
+                newSrc = currSrc.substring(1);
+                newSrc = scheme + newSrc;
+                $('#videoB source').attr('src', newSrc);
+                document.getElementById('videoB').load();
+                document.getElementById('videoB').play();
+            }
+
+         }
+        else if (e.which == 38) {
+            document.getElementById('videoA').pause();
+            $("#videoA").html('<source src="'+ scheme +'A.mp4" type="video/mp4"></source>' );
+            document.getElementById('videoA').load();
+            document.getElementById('videoA').play();
+        }
+        else if (e.which == 40) {
+            document.getElementById('videoA').pause();
+            $("#videoA").html('<source src="'+ scheme +'B.mp4" type="video/mp4"></source>' );
+            document.getElementById('videoA').load();
+            document.getElementById('videoA').play();
+
+        }
+        else if (e.which == 37) {
+            document.getElementById('videoB').pause();
+            $("#videoB").html('<source src="'+ scheme +'A.mp4" type="video/mp4"></source>' );
+            document.getElementById('videoB').load();
+            document.getElementById('videoB').play();
+        }
+        else if (e.which == 39) {
+            document.getElementById('videoB').pause();
+            $("#videoB").html('<source src="'+ scheme +'B.mp4" type="video/mp4"></source>' );
+            document.getElementById('videoB').load();
+            document.getElementById('videoB').play();
+        }
+        else {
+        }
+    });
+});
+</script>

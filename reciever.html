@@ -59,6 +59,17 @@
 
         		console.log(section);
         		console.log(video);
+
+        		document.getElementById('videoA').pause();
+                $("#videoA").html('<source src="'+ section + video + '.mp4" type="video/mp4"></source>' );
+                document.getElementById('videoA').load();
+                document.getElementById('videoA').play();
+
+                setTimeout(function(){
+                    $("#videoA").html('' );
+                    document.getElementById('videoA').load();
+                }, 10000);
+
     		}
 
 		}
@@ -68,6 +79,20 @@
 	</head>
 
 	<body>
+
+    	<video id="videoA" width="1920" height="1080" loop="loop">
+        </video>
+
+        <style>
+            #videoA {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 1920px;
+                height: 1080px;
+            }
+        </style>
+
 	</body>
 
 </html>
