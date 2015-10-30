@@ -52,6 +52,14 @@
 
         /* Reciever Call */
 		function onStringMessage( name, value ){
+    		if(name == "playgroundReciever" && value != "") {
+        		var parsedValue = value.replace("section", "");
+        		var section = parsedValue.charAt(0);
+        		var video = parsedValue.charAt(1);
+
+        		console.log(section);
+        		console.lg(video);
+    		}
 
 		}
 
