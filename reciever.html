@@ -80,12 +80,22 @@
 
 	<body>
 
-    	<video id="videoA" width="1920" height="1080" loop="loop">
+    	<img src="floor_mask.png" id="mask" />
+
+    	<video id="videoA" width="1920" height="1080">
         </video>
 
         <style>
             body,html {
                 overflow: hidden;
+                background-color: black;
+            }
+            #mask {
+                position: absolute;
+                top: 0px;
+                width: 1920px;
+                height: 1080px;
+                z-index: 9999;
             }
             #videoA {
                 position: absolute;
@@ -93,6 +103,7 @@
                 left: 0px;
                 width: 1920px;
                 height: 1080px;
+                z-index: 1;
             }
         </style>
 
